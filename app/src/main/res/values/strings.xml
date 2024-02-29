@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Value Watch</string>
+    <string name="currency_title">Set Your Currency</string>
+    <string name="hourly_rate_title">Set Your Hourly Rate</string>
+    <string name="currency_label">Currency</string>
+    <string name="hourly_rate_label">Hourly Rate</string>
 </resources>
