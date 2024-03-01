@@ -9,11 +9,14 @@ import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.PreferencesScree
 import com.wreckingballsoftware.valuewatch.ui.watchscreen.WatchScreen
 
 @Composable
-fun ValueWatchHost() {
+fun ValueWatchHost(skipPreferences: Boolean) {
     val navController = rememberNavController()
     val navGraph = remember(navController) { NavGraph(navController) }
 
-    val startDestination = Destinations.PreferencesScreen
+    var startDestination = Destinations.PreferencesScreen
+    if (skipPreferences) {
+        startDestination = Destinations.WatchScreen
+    }
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(route = Destinations.PreferencesScreen) {

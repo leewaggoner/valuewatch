@@ -9,7 +9,7 @@ class Converter(
 ) {
     suspend fun secondsToMoney(seconds: Long): String {
         if (seconds <= 0) {
-            return ""
+            return "0.00"
         }
 
         val hourlyRate = currencyRepo.getCurrentHourlyRate().toBigDecimal()

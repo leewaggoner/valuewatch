@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.wreckingballsoftware.valuewatch.ui.navigation.NavGraph
+import com.wreckingballsoftware.valuewatch.ui.theme.dimensions
 
 @Composable
 fun WatchScreen(
@@ -34,6 +37,7 @@ fun WatchScreen(
             )
         }
         Button(
+            modifier = Modifier.width(MaterialTheme.dimensions.buttonWidth),
             onClick = {
                 navGraph.navigateToPreferencesScreen()
             }

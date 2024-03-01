@@ -13,7 +13,6 @@ data class Dimensions(
     val spaceSmall: Dp = 16.dp,
     val spaceMedium: Dp = 32.dp,
     val spaceLarge: Dp = 64.dp,
-    val highScoreBoxWidth: Dp = 160.dp,
 )
 
 val LocalDimensions = staticCompositionLocalOf { Dimensions() }
