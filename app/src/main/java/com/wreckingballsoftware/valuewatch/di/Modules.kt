@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.wreckingballsoftware.valuewatch.data.CurrencyRepo
 import com.wreckingballsoftware.valuewatch.data.DataStoreWrapper
-import com.wreckingballsoftware.valuewatch.domain.Converter
+import com.wreckingballsoftware.valuewatch.data.Timer
 import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.PreferencesViewModel
 import com.wreckingballsoftware.valuewatch.ui.watchscreen.WatchViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -32,12 +32,8 @@ val appModule = module {
     viewModel {
         WatchViewModel(
             handle = get(),
-        )
-    }
-
-    single {
-        Converter(
             currencyRepo = get(),
+            timer = get(),
         )
     }
 
@@ -49,6 +45,12 @@ val appModule = module {
 
     single {
         DataStoreWrapper(getDataStore(androidContext()))
+    }
+
+    single {
+        Timer(
+            currencyRepo = get(),
+        )
     }
 }
 

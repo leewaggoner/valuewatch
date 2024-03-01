@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 
 @Immutable
 data class CustomTypeStyles(
-    val headlineCentered: TextStyle = TextStyle(
+    val headline: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
@@ -36,14 +36,14 @@ data class CustomTypeStyles(
     val timerText : TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 32.sp,
-        lineHeight = 40.sp,
+        fontSize = 64.sp,
+        lineHeight = 71.sp,
     ),
     val moneyText : TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 64.sp,
-        lineHeight = 72.sp,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 72.sp,
+        lineHeight = 79.sp,
     ),
 )
 

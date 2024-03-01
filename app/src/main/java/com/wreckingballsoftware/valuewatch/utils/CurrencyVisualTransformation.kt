@@ -15,7 +15,6 @@ class CurrencyVisualTransformation(
 ) : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val inputText = text.text
-
         val intPart = inputText
             .dropLast(decimalDigits)
             .reversed()
@@ -25,7 +24,6 @@ class CurrencyVisualTransformation(
             .ifEmpty {
                 "0"
             }
-
         val fractionPart = inputText.takeLast(decimalDigits).let {
             if (it.length != decimalDigits) {
                 List(decimalDigits - it.length) {
@@ -35,15 +33,12 @@ class CurrencyVisualTransformation(
                 it
             }
         }
-
         val formattedNumber = currencySymbol + intPart + decimalSymbol + fractionPart
-
         val newText = AnnotatedString(
             text = formattedNumber,
             spanStyles = text.spanStyles,
             paragraphStyles = text.paragraphStyles
         )
-
         val offsetMapping = if (fixedCursorAtTheEnd) {
             FixedCursorOffsetMapping(
                 contentLength = inputText.length,

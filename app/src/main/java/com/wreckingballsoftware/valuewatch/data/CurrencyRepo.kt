@@ -43,6 +43,7 @@ class CurrencyRepo(
             abbreviation = "JPY",
             symbol = "¥",
             decimalDigits = 0,
+            decimalSymbol = "",
         ),
         Currency(
             currency = "Mexican Peso",
