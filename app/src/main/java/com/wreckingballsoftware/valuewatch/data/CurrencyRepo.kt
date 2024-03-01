@@ -5,36 +5,115 @@ import com.wreckingballsoftware.valuewatch.data.models.Currency
 class CurrencyRepo(
     private val dataStoreWrapper: DataStoreWrapper,
 ) {
-    private val currencies = listOf(
-        Currency("Australian Dollar", "AUD", "$"),
-        Currency("Brazilian Real", "BRL", "R$"),
-        Currency("British Pound", "GBP", "£"),
-        Currency("Canadian Dollar", "CAD", "$"),
-        Currency("Chinese Yuan", "CNY", "¥"),
-        Currency("Euro", "EUR", "€"),
-        Currency("Hong Kong Dollar", "HKD", "$"),
-        Currency("Indian Rupee", "INR", "₹"),
-        Currency("Indonesian Rupiah", "IDR", "Rp", 0),
-        Currency("Japanese Yen", "JPY", "¥", 0),
-        Currency("Malaysian Ringgit", "MYR", "RM"),
-        Currency("Mexican Peso", "MXN", "$"),
-        Currency("Philippine Peso", "PHP", "₱"),
-        Currency("Russian Ruble", "RUB", "₽"),
-        Currency("Singapore Dollar", "SGD", "$"),
-        Currency("South Korean Won", "KRW", "₩", 0),
-        Currency("Thai Baht", "THB", "฿"),
-        Currency("US Dollar", "USD", "$"),
+    val currencies = listOf(
+        Currency(
+            currency = "British Pound",
+            abbreviation = "GBP",
+            symbol = "£",
+        ),
+        Currency(
+            currency = "Canadian Dollar",
+            abbreviation = "CAD",
+            symbol = "$",
+        ),
+        Currency(
+            currency = "Chinese Yuan",
+            abbreviation = "CNY",
+            symbol = "¥",
+        ),
+        Currency(
+            currency = "Euro",
+            abbreviation = "EUR",
+            symbol = "€",
+            thousandsSymbol = ".",
+            decimalSymbol = ",",
+        ),
+        Currency(
+            currency = "Hong Kong Dollar",
+            abbreviation = "HKD",
+            symbol = "$",
+        ),
+        Currency(
+            currency = "Indian Rupee",
+            abbreviation = "INR",
+            symbol = "₹",
+        ),
+        Currency(
+            currency = "Japanese Yen",
+            abbreviation = "JPY",
+            symbol = "¥",
+            decimalDigits = 0,
+        ),
+        Currency(
+            currency = "Mexican Peso",
+            abbreviation = "MXN",
+            symbol = "$",
+        ),
+        Currency(
+            currency = "Russian Ruble",
+            abbreviation = "RUB",
+            symbol = "₽",
+            thousandsSymbol = " ",
+            decimalSymbol = ",",
+        ),
+        Currency(
+            currency = "US Dollar",
+            abbreviation = "USD",
+            symbol = "$",
+        ),
     )
+    private var currentHourlyRate: String = ""
+    private var currentCurrencyAbbreviation: String = ""
+
+    suspend fun getCurrentCurrencyAbbreviation(): String {
+        currentCurrencyAbbreviation = dataStoreWrapper.getCurrency("USD")
+        return currentCurrencyAbbreviation
+    }
+
+    suspend fun getCurrentHourlyRate(): String {
+        currentHourlyRate = dataStoreWrapper.getHourlyRate("")
+        return currentHourlyRate
+    }
+
+    suspend fun setCurrentCurrency(currency: String) {
+        currentCurrencyAbbreviation = currency
+        dataStoreWrapper.putCurrency(currency)
+    }
+
+    suspend fun setCurrentHourlyRate(rate: String) {
+        currentHourlyRate = rate
+        dataStoreWrapper.putHourlyRate(rate)
+    }
+
     private val currencyMap: Map<String, Currency> = currencies.associateBy { currency ->
         currency.abbreviation
     }
 
-    suspend fun currencyDecimalDigits(): Int {
-        val currentCurrency = dataStoreWrapper.getCurrency("USD")
-        return currencyMap[currentCurrency]?.decimalDigits ?: 2
+    fun currencyDecimalDigits(): Int {
+        return currencyMap[currentCurrencyAbbreviation]?.decimalDigits ?: 2
     }
 
-    fun currencyStrings(): List<String> = currencies.map { currency ->
-        currency.currency
+    fun currencyName(): String {
+        return currencyMap[currentCurrencyAbbreviation]?.currency ?: "US Dollar"
+    }
+
+    fun currencySymbol(): String {
+        return currencyMap[currentCurrencyAbbreviation]?.symbol ?: "$"
+    }
+
+    fun decimalDigits(): Int {
+        return currencyMap[currentCurrencyAbbreviation]?.decimalDigits ?: 2
+    }
+
+    fun thousandsSymbol(): String {
+        return currencyMap[currentCurrencyAbbreviation]?.thousandsSymbol ?: ","
+    }
+
+    fun decimalSymbol(): String {
+        return currencyMap[currentCurrencyAbbreviation]?.decimalSymbol ?: "."
+    }
+
+    suspend fun clear() {
+        dataStoreWrapper.clearAll()
     }
 }

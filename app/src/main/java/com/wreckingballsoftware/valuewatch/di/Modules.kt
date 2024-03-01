@@ -37,7 +37,6 @@ val appModule = module {
 
     single {
         Converter(
-            dataStoreWrapper = get(),
             currencyRepo = get(),
         )
     }

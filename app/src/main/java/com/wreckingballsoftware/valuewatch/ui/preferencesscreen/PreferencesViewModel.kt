@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class PreferencesViewModel(
     handle: SavedStateHandle,
-    currencyRepo: CurrencyRepo,
+    private val currencyRepo: CurrencyRepo,
 ): ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
     var state by handle.saveable {
@@ -28,8 +28,12 @@ class PreferencesViewModel(
         onBufferOverflow = BufferOverflow.DROP_LATEST,
     )
 
-    init{
-        handleEvent(PreferencesEvent.NewCurrencyList(currencyRepo.currencyStrings()))
+    init {
+        viewModelScope.launch(Dispatchers.Main) {
+            handleEvent(PreferencesEvent.NewCurrencyList(currencyRepo.currencies))
+            handleEvent(PreferencesEvent.CurrencyChanged(currencyRepo.getCurrentCurrencyAbbreviation()))
+            handleEvent(PreferencesEvent.HourlyRateChanged(currencyRepo.getCurrentHourlyRate()))
+        }
     }
 
     fun onHourlyRateChanged(hourlyRate: String) {
@@ -37,27 +41,38 @@ class PreferencesViewModel(
     }
 
     fun handleEvent(event: PreferencesEvent) {
-        state = when (event) {
+        when (event) {
             is PreferencesEvent.NewCurrencyList -> {
-                state.copy(currencies = event.currencies)
+                state = state.copy(currencies = event.currencies)
             }
             is PreferencesEvent.ExpandedChanged -> {
-                state.copy(dropdownExpanded = event.expanded)
+                state = state.copy(dropdownExpanded = event.expanded)
             }
             PreferencesEvent.DismissDropdown -> {
-                state.copy(dropdownExpanded = false)
-            }
-            is PreferencesEvent.CurrencySelected -> {
-                state.copy(selectedCurrency = event.currency, dropdownExpanded = false)
+                state = state.copy(dropdownExpanded = false)
             }
             is PreferencesEvent.HourlyRateChanged -> {
-                state.copy(hourlyRate = event.hourlyRate)
+                state = state.copy(hourlyRate = event.hourlyRate)
+            }
+            is PreferencesEvent.CurrencyChanged -> {
+                viewModelScope.launch(Dispatchers.Main) {
+                    currencyRepo.setCurrentCurrency(event.currency)
+                    state = state.copy(
+                        decimalSymbol = currencyRepo.decimalSymbol(),
+                        selectedCurrency = currencyRepo.currencyName(),
+                        currencySymbol = currencyRepo.currencySymbol(),
+                        decimalDigits = currencyRepo.decimalDigits(),
+                        thousandsSymbol = currencyRepo.thousandsSymbol(),
+                        dropdownExpanded = false,
+                    )
+                }
             }
             PreferencesEvent.OnDoneClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
+                    currencyRepo.setCurrentHourlyRate(state.hourlyRate)
+//                    currencyRepo.clear()
                     navigation.emit(PreferencesNavigation.GoToWatchScreen)
                 }
-                state
             }
         }
     }
