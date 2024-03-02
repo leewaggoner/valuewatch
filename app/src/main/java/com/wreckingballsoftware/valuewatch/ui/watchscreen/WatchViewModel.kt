@@ -70,6 +70,8 @@ class WatchViewModel(
                 state = state.copy(money = event.money)
             }
             WatchEvent.OnPreferencesButtonClicked -> {
+                state = state.copy(isTiming = false, time = "00:00:00", money = "0")
+                resetTimer()
                 navigation.tryEmit(WatchNavigation.GoToPreferences)
             }
             WatchEvent.OnStart -> {
