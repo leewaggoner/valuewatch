@@ -8,20 +8,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.wreckingballsoftware.valuewatch.data.DataStoreWrapper
+import com.wreckingballsoftware.valuewatch.data.CurrencyRepo
 import com.wreckingballsoftware.valuewatch.ui.navigation.ValueWatchHost
 import com.wreckingballsoftware.valuewatch.ui.theme.ValueWatchTheme
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
-    private val dataStoreWrapper: DataStoreWrapper by inject()
+    private val currencyRepo: CurrencyRepo by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {
-            val skipPreferences = dataStoreWrapper.getCurrency("").isNotEmpty()
+//            currencyRepo.clear()
+            currencyRepo.initialize()
+            val skipPreferences = currencyRepo.getCurrentHourlyRate().isNotEmpty()
+
             setContent {
                 ValueWatchTheme {
                     // A surface container using the 'background' color from the theme

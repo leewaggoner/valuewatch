@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -26,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wreckingballsoftware.valuewatch.R
+import com.wreckingballsoftware.valuewatch.ui.compose.CurrencyDropdown
 import com.wreckingballsoftware.valuewatch.ui.navigation.NavGraph
 import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.models.PreferencesEvent
 import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.models.PreferencesNavigation
@@ -80,43 +79,10 @@ fun PreferencesScreenContent(
                 text = stringResource(id = R.string.currency_title),
                 style = MaterialTheme.valueWatchTypography.title,
             )
-
-            ExposedDropdownMenuBox(
-                expanded = state.dropdownExpanded,
-                onExpandedChange = { newValue ->
-                    handleEvent(PreferencesEvent.ExpandedChanged(expanded = newValue))
-               },
-            ) {
-                OutlinedTextField(
-                    modifier = Modifier.menuAnchor(),
-                    readOnly = true,
-                    value = state.selectedCurrency,
-                    onValueChange = { },
-                    label = { Text(text = stringResource(id = R.string.currency_label)) },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.dropdownExpanded)
-                    },
-                    colors = ExposedDropdownMenuDefaults.textFieldColors(),
-                )
-                ExposedDropdownMenu(
-                    expanded = state.dropdownExpanded,
-                    onDismissRequest = { handleEvent(PreferencesEvent.DismissDropdown) },
-                ) {
-                    state.currencies.forEach { selectionOption ->
-                        DropdownMenuItem(
-                            text = { Text(text = selectionOption.currency) },
-                            onClick = {
-                                handleEvent(
-                                    PreferencesEvent.CurrencyChanged(
-                                        currency = selectionOption.abbreviation
-                                    )
-                                )
-                            },
-                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                        )
-                    }
-                }
-            }
+            CurrencyDropdown(
+                state = state,
+                handleEvent = handleEvent
+            )
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spaceSmall))
             Text(
                 text = stringResource(id = R.string.hourly_rate_title),

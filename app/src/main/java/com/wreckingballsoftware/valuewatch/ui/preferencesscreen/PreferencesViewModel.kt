@@ -29,15 +29,9 @@ class PreferencesViewModel(
     )
 
     init {
-        viewModelScope.launch(Dispatchers.Main) {
-            handleEvent(PreferencesEvent.NewCurrencyList(currencyRepo.currencies))
-            handleEvent(PreferencesEvent.CurrencyChanged(currencyRepo.getCurrentCurrencyAbbreviation()))
-            handleEvent(PreferencesEvent.HourlyRateChanged(currencyRepo.getCurrentHourlyRate()))
-        }
-    }
-
-    fun onHourlyRateChanged(hourlyRate: String) {
-        state = state.copy(hourlyRate = hourlyRate)
+        handleEvent(PreferencesEvent.NewCurrencyList(currencyRepo.currencies))
+        handleEvent(PreferencesEvent.CurrencyChanged(currencyRepo.getCurrentCurrencyAbbreviation()))
+        handleEvent(PreferencesEvent.HourlyRateChanged(currencyRepo.getCurrentHourlyRate()))
     }
 
     fun handleEvent(event: PreferencesEvent) {
@@ -75,7 +69,6 @@ class PreferencesViewModel(
             PreferencesEvent.OnDoneClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
                     currencyRepo.setCurrentHourlyRate(state.hourlyRate)
-//                    currencyRepo.clear()
                     navigation.emit(PreferencesNavigation.GoToWatchScreen)
                 }
             }

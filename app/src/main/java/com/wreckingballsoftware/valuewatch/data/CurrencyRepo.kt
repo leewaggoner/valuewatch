@@ -66,13 +66,16 @@ class CurrencyRepo(
     private var currentHourlyRate: String = ""
     private var currentCurrencyAbbreviation: String = ""
 
-    suspend fun getCurrentCurrencyAbbreviation(): String {
+    suspend fun initialize() {
+        currentHourlyRate = dataStoreWrapper.getHourlyRate("")
         currentCurrencyAbbreviation = dataStoreWrapper.getCurrency("USD")
+    }
+
+    fun getCurrentCurrencyAbbreviation(): String {
         return currentCurrencyAbbreviation
     }
 
-    suspend fun getCurrentHourlyRate(): String {
-        currentHourlyRate = dataStoreWrapper.getHourlyRate("")
+    fun getCurrentHourlyRate(): String {
         return currentHourlyRate
     }
 
