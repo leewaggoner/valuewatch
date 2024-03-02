@@ -1,5 +1,6 @@
 package com.wreckingballsoftware.valuewatch.ui.preferencesscreen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -44,6 +45,10 @@ fun PreferencesScreen(
         when (nav) {
             PreferencesNavigation.GoToWatchScreen -> navGraph.navigateToWatchScreen()
         }
+    }
+
+    BackHandler {
+        navGraph.popBackStack()
     }
 
     PreferencesScreenContent(
