@@ -48,6 +48,7 @@ fun PreferencesScreen(
     }
 
     BackHandler {
+        viewModel.handleEvent(PreferencesEvent.OnBackClicked)
         navGraph.popBackStack()
     }
 

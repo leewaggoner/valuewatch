@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 
 class WatchViewModel(
     handle: SavedStateHandle,
-    currencyRepo: CurrencyRepo,
+    private val currencyRepo: CurrencyRepo,
     private val timer: Timer,
 ): ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
     var state by handle.saveable {
-        mutableStateOf(WatchState(currencySymbol = currencyRepo.currencySymbol()))
+        mutableStateOf(WatchState())
     }
     val navigation = MutableSharedFlow<WatchNavigation>(
         extraBufferCapacity = 1,
@@ -71,6 +71,14 @@ class WatchViewModel(
             }
             WatchEvent.OnPreferencesButtonClicked -> {
                 navigation.tryEmit(WatchNavigation.GoToPreferences)
+            }
+            WatchEvent.OnStart -> {
+                state = state.copy(
+                    money = "0",
+                    time = "00:00:00",
+                    currencySymbol = currencyRepo.currencySymbol(),
+                )
+                resetTimer()
             }
         }
     }

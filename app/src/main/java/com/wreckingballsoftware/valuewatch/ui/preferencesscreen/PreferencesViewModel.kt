@@ -67,6 +67,11 @@ class PreferencesViewModel(
                     )
                 }
             }
+            PreferencesEvent.OnBackClicked -> {
+                viewModelScope.launch(Dispatchers.Main) {
+                    currencyRepo.setCurrentHourlyRate(state.hourlyRate)
+                }
+            }
             PreferencesEvent.OnDoneClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
                     currencyRepo.setCurrentHourlyRate(state.hourlyRate)

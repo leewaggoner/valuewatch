@@ -8,5 +8,6 @@ sealed interface PreferencesEvent {
     data object DismissDropdown : PreferencesEvent
     data class HourlyRateChanged(val hourlyRate: String) : PreferencesEvent
     data class CurrencyChanged(val currency: String) : PreferencesEvent
+    data object OnBackClicked : PreferencesEvent
     data object OnDoneClicked : PreferencesEvent
 }
