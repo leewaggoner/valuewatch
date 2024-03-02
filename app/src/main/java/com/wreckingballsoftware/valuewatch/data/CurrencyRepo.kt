@@ -12,11 +12,6 @@ class CurrencyRepo(
             symbol = "£",
         ),
         Currency(
-            currency = "Canadian Dollar",
-            abbreviation = "CAD",
-            symbol = "$",
-        ),
-        Currency(
             currency = "Chinese Yuan",
             abbreviation = "CNY",
             symbol = "¥",
@@ -29,11 +24,6 @@ class CurrencyRepo(
             decimalSymbol = ",",
         ),
         Currency(
-            currency = "Hong Kong Dollar",
-            abbreviation = "HKD",
-            symbol = "$",
-        ),
-        Currency(
             currency = "Indian Rupee",
             abbreviation = "INR",
             symbol = "₹",
@@ -44,11 +34,6 @@ class CurrencyRepo(
             symbol = "¥",
             decimalDigits = 0,
             decimalSymbol = "",
-        ),
-        Currency(
-            currency = "Mexican Peso",
-            abbreviation = "MXN",
-            symbol = "$",
         ),
         Currency(
             currency = "Russian Ruble",
