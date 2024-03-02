@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
+import com.wreckingballsoftware.valuewatch.data.BackgroundColorRepo
 import com.wreckingballsoftware.valuewatch.data.CurrencyRepo
 import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.models.PreferencesEvent
 import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.models.PreferencesNavigation
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 
 class PreferencesViewModel(
     handle: SavedStateHandle,
+    private val backgroundColorRepo: BackgroundColorRepo,
     private val currencyRepo: CurrencyRepo,
 ): ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
@@ -29,14 +31,16 @@ class PreferencesViewModel(
     )
 
     init {
-        handleEvent(PreferencesEvent.NewCurrencyList(currencyRepo.currencies))
+        handleEvent(PreferencesEvent.LoadCurrencyList(currencyRepo.currencies))
         handleEvent(PreferencesEvent.CurrencyChanged(currencyRepo.getCurrentCurrencyAbbreviation()))
         handleEvent(PreferencesEvent.HourlyRateChanged(currencyRepo.getCurrentHourlyRate()))
+        handleEvent(PreferencesEvent.LoadBackgroundColors(backgroundColorRepo.backgroundColors))
+        handleEvent(PreferencesEvent.BackgroundColorChanged(backgroundColorRepo.getCurrentBackgroundColorIndex()))
     }
 
     fun handleEvent(event: PreferencesEvent) {
         when (event) {
-            is PreferencesEvent.NewCurrencyList -> {
+            is PreferencesEvent.LoadCurrencyList -> {
                 state = state.copy(currencies = event.currencies)
             }
             is PreferencesEvent.ExpandedChanged -> {
@@ -61,14 +65,22 @@ class PreferencesViewModel(
                     )
                 }
             }
+            is PreferencesEvent.LoadBackgroundColors -> {
+                state = state.copy(bgColors = event.bgColors)
+            }
+            is PreferencesEvent.BackgroundColorChanged -> {
+                state = state.copy(selectedBgColor = event.colorIndex)
+            }
             PreferencesEvent.OnBackClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
                     currencyRepo.setCurrentHourlyRate(state.hourlyRate)
+                    backgroundColorRepo.setBackgroundColor(state.bgColors[state.selectedBgColor].colorText)
                 }
             }
             PreferencesEvent.OnDoneClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
                     currencyRepo.setCurrentHourlyRate(state.hourlyRate)
+                    backgroundColorRepo.setBackgroundColor(state.bgColors[state.selectedBgColor].colorText)
                     navigation.emit(PreferencesNavigation.GoToWatchScreen)
                 }
             }

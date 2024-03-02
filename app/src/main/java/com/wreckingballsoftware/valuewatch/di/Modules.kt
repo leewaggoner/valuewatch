@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.wreckingballsoftware.valuewatch.data.BackgroundColorRepo
 import com.wreckingballsoftware.valuewatch.data.CurrencyRepo
 import com.wreckingballsoftware.valuewatch.data.DataStoreWrapper
 import com.wreckingballsoftware.valuewatch.data.Timer
@@ -25,6 +26,7 @@ val appModule = module {
     viewModel {
         PreferencesViewModel(
             handle = get(),
+            backgroundColorRepo = get(),
             currencyRepo = get(),
         )
     }
@@ -39,6 +41,12 @@ val appModule = module {
 
     single {
         CurrencyRepo(
+            dataStoreWrapper = get(),
+        )
+    }
+
+    single {
+        BackgroundColorRepo(
             dataStoreWrapper = get(),
         )
     }

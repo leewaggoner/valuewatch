@@ -1,6 +1,7 @@
 package com.wreckingballsoftware.valuewatch.ui.preferencesscreen.models
 
 import android.os.Parcelable
+import com.wreckingballsoftware.valuewatch.data.models.BackgroundColor
 import com.wreckingballsoftware.valuewatch.data.models.Currency
 import kotlinx.parcelize.Parcelize
 
@@ -14,5 +15,7 @@ data class PreferencesState(
     val thousandsSymbol: String = "",
     val decimalSymbol: String = "",
     val dropdownExpanded: Boolean = false,
+    val bgColors: List<BackgroundColor> = listOf(),
+    val selectedBgColor: Int = 0,
 ) : Parcelable
 

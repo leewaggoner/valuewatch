@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,6 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wreckingballsoftware.valuewatch.R
+import com.wreckingballsoftware.valuewatch.data.models.BackgroundColor
+import com.wreckingballsoftware.valuewatch.ui.compose.BackgroundColorGrid
 import com.wreckingballsoftware.valuewatch.ui.compose.CurrencyDropdown
 import com.wreckingballsoftware.valuewatch.ui.compose.RateTextField
 import com.wreckingballsoftware.valuewatch.ui.navigation.NavGraph
@@ -63,7 +67,8 @@ fun PreferencesScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(1f),
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
@@ -78,6 +83,12 @@ fun PreferencesScreenContent(
                 style = MaterialTheme.valueWatchTypography.title,
             )
             RateTextField(state = state, handleEvent = handleEvent)
+            Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spaceSmall))
+            Text(
+                text = stringResource(id = R.string.background_color_title),
+                style = MaterialTheme.valueWatchTypography.title,
+            )
+            BackgroundColorGrid(state = state, handleEvent = handleEvent)
         }
         Button(
             modifier = Modifier.width(MaterialTheme.dimensions.buttonWidth),
@@ -97,7 +108,19 @@ fun PreferencesScreenContent(
 @Composable
 fun PreferencesScreenContentPreview() {
     PreferencesScreenContent(
-        state = PreferencesState(),
+        state = PreferencesState(
+            bgColors = listOf(
+                BackgroundColor("White", 0xFFFFFFFF.toInt(), 0xFF000000.toInt()),
+                BackgroundColor("Black", 0xFF000000.toInt(), 0xFFFFFFFF.toInt()),
+                BackgroundColor("Red", 0xFFFF0000.toInt(), 0xFFFFFFFF.toInt()),
+                BackgroundColor("Green", 0xFF00FF00.toInt(), 0xFFFFFFFF.toInt()),
+                BackgroundColor("Blue", 0xFF0000FF.toInt(), 0xFFFFFFFF.toInt()),
+                BackgroundColor("Yellow", 0xFFFFFF00.toInt(), 0xFF000000.toInt()),
+                BackgroundColor("Magenta", 0xFFFF00FF.toInt(), 0xFFFFFFFF.toInt()),
+                BackgroundColor("Cyan", 0xFF00FFFF.toInt(), 0xFF000000.toInt()),
+                BackgroundColor("Gray", 0xFF888888.toInt(), 0xFF000000.toInt()),
+            )
+        ),
         handleEvent = { },
     )
 }

@@ -15,6 +15,7 @@ class DataStoreWrapper(private val dataStore: DataStore<Preferences>) {
     private object PreferencesKey {
         val HOURLY_RATE = stringPreferencesKey("HourlyRate")
         val CURRENCY = stringPreferencesKey("Currency")
+        val BACKGROUND_COLOR = stringPreferencesKey("BackgroundColor")
     }
 
     suspend fun putHourlyRate(rate: String) = withContext(Dispatchers.IO) {
@@ -47,6 +48,22 @@ class DataStoreWrapper(private val dataStore: DataStore<Preferences>) {
                 throw exception
             }
         }.first()[PreferencesKey.CURRENCY] ?: default
+    }
+
+    suspend fun setBackgroundColor(color: String) = withContext(Dispatchers.IO) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.BACKGROUND_COLOR] = color
+        }
+    }
+
+    suspend fun getBackgroundColor(default: String): String = withContext(Dispatchers.IO) {
+        dataStore.data.catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }.first()[PreferencesKey.BACKGROUND_COLOR] ?: default
     }
 
     suspend fun clearAll() = withContext(Dispatchers.IO) {
