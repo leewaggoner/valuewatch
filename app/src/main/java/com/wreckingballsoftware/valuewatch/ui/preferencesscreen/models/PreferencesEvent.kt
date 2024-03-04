@@ -12,5 +12,6 @@ sealed interface PreferencesEvent {
     data object OnBackClicked : PreferencesEvent
     data object OnDoneClicked : PreferencesEvent
     data class LoadBackgroundColors(val bgColors: List<BackgroundColor>) : PreferencesEvent
+    data class InitSelectedBackgroundColor(val colorIndex: Int) : PreferencesEvent
     data class BackgroundColorChanged(val colorIndex: Int) : PreferencesEvent
 }

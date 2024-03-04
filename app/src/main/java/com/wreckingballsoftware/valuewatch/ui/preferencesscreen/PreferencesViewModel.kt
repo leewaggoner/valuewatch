@@ -35,7 +35,7 @@ class PreferencesViewModel(
         handleEvent(PreferencesEvent.CurrencyChanged(currencyRepo.getCurrentCurrencyAbbreviation()))
         handleEvent(PreferencesEvent.HourlyRateChanged(currencyRepo.getCurrentHourlyRate()))
         handleEvent(PreferencesEvent.LoadBackgroundColors(backgroundColorRepo.backgroundColors))
-        handleEvent(PreferencesEvent.BackgroundColorChanged(backgroundColorRepo.getCurrentBackgroundColorIndex()))
+        handleEvent(PreferencesEvent.InitSelectedBackgroundColor(backgroundColorRepo.getCurrentBackgroundColorIndex()))
     }
 
     fun handleEvent(event: PreferencesEvent) {
@@ -67,6 +67,9 @@ class PreferencesViewModel(
             }
             is PreferencesEvent.LoadBackgroundColors -> {
                 state = state.copy(bgColors = event.bgColors)
+            }
+            is PreferencesEvent.InitSelectedBackgroundColor -> {
+                state = state.copy(selectedBgColor = event.colorIndex)
             }
             is PreferencesEvent.BackgroundColorChanged -> {
                 viewModelScope.launch(Dispatchers.Main) {
