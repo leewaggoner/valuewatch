@@ -5,9 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
@@ -24,9 +24,14 @@ import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.models.Preferenc
 import com.wreckingballsoftware.valuewatch.ui.theme.valueWatchTypography
 
 @Composable
-fun BackgroundColorGrid(state: PreferencesState, handleEvent: (PreferencesEvent) -> Unit) {
+fun BackgroundColorGrid(
+    modifier: Modifier = Modifier,
+    state: PreferencesState,
+    fontColor: Color,
+    handleEvent: (PreferencesEvent) -> Unit,
+) {
     LazyVerticalGrid(
-        modifier = Modifier.height(300.dp),
+        modifier = modifier.then(Modifier.height(300.dp)),
         columns = GridCells.Fixed(3),
         ) {
         items(state.bgColors.size) { index ->
@@ -36,12 +41,13 @@ fun BackgroundColorGrid(state: PreferencesState, handleEvent: (PreferencesEvent)
             val isSelected = index == state.selectedBgColor
             Card(
                 modifier = Modifier
-                    .size(100.dp)
+                    .fillMaxWidth(33.3f)
+                    .height(100.dp)
                     .padding(4.dp)
                     .clickable { handleEvent(PreferencesEvent.BackgroundColorChanged(index)) },
                 border = BorderStroke(
-                    width = 2.dp,
-                    color = if (isSelected) Color.Black else Color.LightGray
+                    width = if (isSelected) 8.dp else 2.dp,
+                    color = fontColor,
                 ),
             ) {
                 Box(
@@ -78,6 +84,7 @@ fun BackgroundColorGridPreview() {
                 BackgroundColor("Gray", 0xFF888888.toInt(), 0xFF000000.toInt()),
             )
         ),
+        fontColor = Color.Black,
         handleEvent = { }
     )
 }

@@ -6,5 +6,5 @@
     <string name="hourly_rate_label">Hourly Rate</string>
     <string name="start">Start</string>
     <string name="reset">Reset</string>
-    <string name="background_color_title">Select a BackgroundColor</string>
+    <string name="background_color_title">Select a Background Color</string>
 </resources>

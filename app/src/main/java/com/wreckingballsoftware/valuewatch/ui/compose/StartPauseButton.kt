@@ -18,15 +18,22 @@ import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchEvent
 import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchState
 
 @Composable
-fun StartPauseButton(state: WatchState, fontColor: Color, handleEvent: (WatchEvent) -> Unit) {
+fun StartPauseButton(
+    modifier: Modifier = Modifier,
+    state: WatchState,
+    fontColor: Color,
+    handleEvent: (WatchEvent) -> Unit
+) {
     IconButton(
-        modifier = Modifier
-            .size(80.dp)
-            .border(
-                width = 1.dp,
-                color = fontColor,
-                shape = CircleShape
-            ),
+        modifier = modifier.then(
+            Modifier
+                .size(80.dp)
+                .border(
+                    width = 1.dp,
+                    color = fontColor,
+                    shape = CircleShape
+                )
+        ),
         onClick = {
             handleEvent(WatchEvent.OnPlayButtonClicked)
         }

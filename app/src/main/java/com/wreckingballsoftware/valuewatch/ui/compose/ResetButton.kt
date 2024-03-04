@@ -19,15 +19,21 @@ import com.wreckingballsoftware.valuewatch.ui.theme.valueWatchTypography
 import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchEvent
 
 @Composable
-fun ResetButton(fontColor: Color, handleEvent: (WatchEvent) -> Unit) {
+fun ResetButton(
+    modifier: Modifier = Modifier,
+    fontColor: Color,
+    handleEvent: (WatchEvent) -> Unit,
+) {
     Button(
-        modifier = Modifier
-            .width(MaterialTheme.dimensions.buttonWidth)
-            .border(
-                width = 1.dp,
-                color = fontColor,
-                shape = RectangleShape
-            ),
+        modifier = modifier.then(
+            Modifier
+                .width(MaterialTheme.dimensions.buttonWidth)
+                .border(
+                    width = 1.dp,
+                    color = fontColor,
+                    shape = RectangleShape
+                )
+        ),
         onClick = { handleEvent(WatchEvent.OnResetButtonClicked) },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent

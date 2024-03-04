@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -52,6 +53,7 @@ fun PreferencesScreen(
 
     PreferencesScreenContent(
         state = viewModel.state,
+        fontColor = fontColor,
         handleEvent = viewModel::handleEvent,
     )
 }
@@ -59,6 +61,7 @@ fun PreferencesScreen(
 @Composable
 fun PreferencesScreenContent(
     state: PreferencesState,
+    fontColor: Color,
     handleEvent: (PreferencesEvent) -> Unit,
 ) {
     Column(
@@ -70,6 +73,7 @@ fun PreferencesScreenContent(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
+                .padding(all = MaterialTheme.dimensions.spaceSmall)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -77,20 +81,23 @@ fun PreferencesScreenContent(
             Text(
                 text = stringResource(id = R.string.currency_title),
                 style = MaterialTheme.valueWatchTypography.title,
+                color = fontColor,
             )
-            CurrencyDropdown(state = state, handleEvent = handleEvent)
+            CurrencyDropdown(state = state, fontColor = fontColor, handleEvent = handleEvent)
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spaceSmall))
             Text(
                 text = stringResource(id = R.string.hourly_rate_title),
                 style = MaterialTheme.valueWatchTypography.title,
+                color = fontColor,
             )
-            RateTextField(state = state, handleEvent = handleEvent)
+            RateTextField(state = state, fontColor = fontColor, handleEvent = handleEvent)
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spaceSmall))
             Text(
                 text = stringResource(id = R.string.background_color_title),
                 style = MaterialTheme.valueWatchTypography.title,
+                color = fontColor,
             )
-            BackgroundColorGrid(state = state, handleEvent = handleEvent)
+            BackgroundColorGrid(state = state, fontColor = fontColor, handleEvent = handleEvent)
         }
         Button(
             modifier = Modifier.width(MaterialTheme.dimensions.buttonWidth),
@@ -123,6 +130,7 @@ fun PreferencesScreenContentPreview() {
                 BackgroundColor("Gray", 0xFF888888.toInt(), 0xFF000000.toInt()),
             )
         ),
+        fontColor = Color.Black,
         handleEvent = { },
     )
 }

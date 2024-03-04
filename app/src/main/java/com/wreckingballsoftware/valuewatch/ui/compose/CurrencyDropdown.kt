@@ -8,6 +8,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.wreckingballsoftware.valuewatch.R
@@ -17,10 +18,13 @@ import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.models.Preferenc
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrencyDropdown(
+    modifier: Modifier = Modifier,
     state: PreferencesState,
+    fontColor: Color,
     handleEvent: (PreferencesEvent) -> Unit
 ) {
     ExposedDropdownMenuBox(
+        modifier = modifier,
         expanded = state.dropdownExpanded,
         onExpandedChange = { newValue ->
             handleEvent(PreferencesEvent.ExpandedChanged(expanded = newValue))
@@ -31,7 +35,12 @@ fun CurrencyDropdown(
             readOnly = true,
             value = state.selectedCurrency,
             onValueChange = { },
-            label = { Text(text = stringResource(id = R.string.currency_label)) },
+            label = {
+                Text(
+                    text = stringResource(id = R.string.currency_label),
+                    color = fontColor,
+                )
+            },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = state.dropdownExpanded)
             },
@@ -63,6 +72,7 @@ fun CurrencyDropdown(
 fun CurrencyDropdownPreview() {
     CurrencyDropdown(
         state = PreferencesState(),
+        fontColor = Color.Black,
         handleEvent = { }
     )
 }
