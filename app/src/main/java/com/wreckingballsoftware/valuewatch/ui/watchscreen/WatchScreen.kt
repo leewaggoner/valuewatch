@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wreckingballsoftware.valuewatch.ui.compose.ResetButton
@@ -28,6 +29,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun WatchScreen(
     navGraph: NavGraph,
+    fontColor: Color,
     viewModel: WatchViewModel = getViewModel(),
 ) {
     val navigation = viewModel.navigation.collectAsStateWithLifecycle(null)
@@ -43,6 +45,7 @@ fun WatchScreen(
 
     WatchScreenContent(
         state = viewModel.state,
+        fontColor = fontColor,
         handleEvent = viewModel::handleEvent,
     )
 }
@@ -50,6 +53,7 @@ fun WatchScreen(
 @Composable
 private fun WatchScreenContent(
     state: WatchState,
+    fontColor: Color,
     handleEvent: (WatchEvent) -> Unit,
 ) {
     Column(
@@ -67,16 +71,18 @@ private fun WatchScreenContent(
             Text(
                 text = state.time,
                 style = MaterialTheme.valueWatchTypography.headline,
+                color = fontColor
             )
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spaceSmall))
             Text(
                 text = "${state.currencySymbol}${state.money}",
                 style = MaterialTheme.valueWatchTypography.moneyText,
+                color = fontColor
             )
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spaceSmall))
-            StartPauseButton(state = state, handleEvent = handleEvent)
+            StartPauseButton(state = state, fontColor = fontColor, handleEvent = handleEvent)
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spaceLarge))
-            ResetButton(handleEvent = handleEvent)
+            ResetButton(fontColor = fontColor, handleEvent = handleEvent)
         }
         Button(
             modifier = Modifier.width(MaterialTheme.dimensions.buttonWidth),
@@ -97,6 +103,7 @@ private fun WatchScreenContent(
 fun WatchScreenContentPreview() {
     WatchScreenContent(
         state = WatchState(),
+        fontColor = Color.Black,
         handleEvent = { },
     )
 }

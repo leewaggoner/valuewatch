@@ -19,13 +19,13 @@ import com.wreckingballsoftware.valuewatch.ui.theme.valueWatchTypography
 import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchEvent
 
 @Composable
-fun ResetButton(handleEvent: (WatchEvent) -> Unit) {
+fun ResetButton(fontColor: Color, handleEvent: (WatchEvent) -> Unit) {
     Button(
         modifier = Modifier
             .width(MaterialTheme.dimensions.buttonWidth)
             .border(
                 width = 1.dp,
-                color = Color.Gray,
+                color = fontColor,
                 shape = RectangleShape
             ),
         onClick = { handleEvent(WatchEvent.OnResetButtonClicked) },
@@ -35,7 +35,7 @@ fun ResetButton(handleEvent: (WatchEvent) -> Unit) {
     ) {
         Text(
             text = stringResource(id = R.string.reset),
-            color = Color.Black,
+            color = fontColor,
             style = MaterialTheme.valueWatchTypography.title
         )
     }
@@ -44,5 +44,5 @@ fun ResetButton(handleEvent: (WatchEvent) -> Unit) {
 @Preview(name = "ResetButton Preview", showBackground = true)
 @Composable
 fun ResetButtonPreview() {
-    ResetButton(handleEvent = { })
+    ResetButton(fontColor = Color.Black, handleEvent = { })
 }
