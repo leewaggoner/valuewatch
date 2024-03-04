@@ -3,11 +3,11 @@ package com.wreckingballsoftware.valuewatch.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.wreckingballsoftware.valuewatch.data.BackgroundColorRepo
 import com.wreckingballsoftware.valuewatch.data.CurrencyRepo
@@ -27,19 +27,18 @@ class MainActivity : ComponentActivity() {
 //            currencyRepo.clear()
             backgroundColorRepo.initialize()
             currencyRepo.initialize()
-            val backgroundColor = backgroundColorRepo.getBackgroundColor()
             val skipPreferences = currencyRepo.getCurrentHourlyRate().isNotEmpty()
 
             setContent {
+                val backgroundColor = backgroundColorRepo.bgColor.collectAsStateWithLifecycle().value
                 ValueWatchTheme(
-                    backgroundColor = backgroundColor,
+                    darkTheme = false,
+                    dynamicColor = false,
                 ) {
-                    // A surface container using the 'background' color from the theme
                     Surface(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(backgroundColor),
-                        color = MaterialTheme.colorScheme.background
+                            .fillMaxSize(),
+                        color = Color(backgroundColor.backgroundColor)
                     ) {
                         ValueWatchHost(skipPreferences = skipPreferences)
                     }

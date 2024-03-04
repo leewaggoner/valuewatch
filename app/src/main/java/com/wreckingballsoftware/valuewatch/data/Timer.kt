@@ -64,6 +64,10 @@ class Timer(
         }
 
         var rate = currencyRepo.getCurrentHourlyRate()
+        if (rate.isEmpty()) {
+            return "0"
+        }
+
         val decimalDigits = currencyRepo.currencyDecimalDigits()
         if (decimalDigits > 0 && rate.length >= decimalDigits) {
             rate =StringBuilder(rate).insert(rate.length - currencyRepo.currencyDecimalDigits(), ".")
@@ -81,7 +85,6 @@ class Timer(
         val hours = seconds / 3600
         val minutes = (seconds % 3600) / 60
         val secs = seconds % 60
-        val time = String.format("%02d:%02d:%02d", hours, minutes, secs)
-        return time
+        return String.format("%02d:%02d:%02d", hours, minutes, secs)
     }
 }

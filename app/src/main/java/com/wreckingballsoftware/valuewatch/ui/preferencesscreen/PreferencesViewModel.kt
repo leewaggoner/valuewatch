@@ -69,18 +69,19 @@ class PreferencesViewModel(
                 state = state.copy(bgColors = event.bgColors)
             }
             is PreferencesEvent.BackgroundColorChanged -> {
-                state = state.copy(selectedBgColor = event.colorIndex)
+                viewModelScope.launch(Dispatchers.Main) {
+                    state = state.copy(selectedBgColor = event.colorIndex)
+                    backgroundColorRepo.setBackgroundColor(state.bgColors[state.selectedBgColor].colorText)
+                }
             }
             PreferencesEvent.OnBackClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
                     currencyRepo.setCurrentHourlyRate(state.hourlyRate)
-                    backgroundColorRepo.setBackgroundColor(state.bgColors[state.selectedBgColor].colorText)
                 }
             }
             PreferencesEvent.OnDoneClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
                     currencyRepo.setCurrentHourlyRate(state.hourlyRate)
-                    backgroundColorRepo.setBackgroundColor(state.bgColors[state.selectedBgColor].colorText)
                     navigation.emit(PreferencesNavigation.GoToWatchScreen)
                 }
             }
