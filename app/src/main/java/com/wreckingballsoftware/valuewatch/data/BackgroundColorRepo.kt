@@ -14,13 +14,13 @@ class BackgroundColorRepo(
     val backgroundColors = listOf(
         BackgroundColor("White", 0xFFFFFFFF.toInt(), 0xFF000000.toInt()),
         BackgroundColor("Black", 0xFF000000.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Red", 0xFFFF0000.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Green", 0xFF00FF00.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Blue", 0xFF0000FF.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Yellow", 0xFFFFFF00.toInt(), 0xFF000000.toInt()),
-        BackgroundColor("Magenta", 0xFFFF00FF.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Cyan", 0xFF00FFFF.toInt(), 0xFF000000.toInt()),
-        BackgroundColor("Gray", 0xFF888888.toInt(), 0xFF000000.toInt()),
+        BackgroundColor("Pink", 0xFFFF80ED.toInt(), 0xFF000000.toInt()),
+        BackgroundColor("Forest", 0xFF065535.toInt(), 0xFFFFFFFF.toInt()),
+        BackgroundColor("Sand", 0xFFFFA500.toInt(), 0xFF000000.toInt()),
+        BackgroundColor("Teal", 0xFF40E0D0.toInt(), 0xFFFFFFFF.toInt()),
+        BackgroundColor("Peach", 0xFFFA8072.toInt(), 0xFFFFFFFF.toInt()),
+        BackgroundColor("Red", 0xFF800000.toInt(), 0xFFFFFFFF.toInt()),
+        BackgroundColor("Violet", 0xFF8A2BE2.toInt(), 0xFFFFFFFF.toInt()),
     )
     private val _bgColor = MutableStateFlow(backgroundColors.first())
     val bgColor: StateFlow<BackgroundColor> = _bgColor
