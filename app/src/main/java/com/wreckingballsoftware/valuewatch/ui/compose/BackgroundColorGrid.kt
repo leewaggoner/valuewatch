@@ -35,8 +35,8 @@ fun BackgroundColorGrid(
         columns = GridCells.Fixed(3),
         ) {
         items(state.bgColors.size) { index ->
-            val backgroundColor = state.bgColors[index].backgroundColor
-            val textColor = state.bgColors[index].textColor
+            val backgroundColor = state.bgColors[index].getBackgroundColor()
+            val textColor = state.bgColors[index].getTextColor()
             val text = state.bgColors[index].colorText
             val isSelected = index == state.selectedBgColor
             Card(
@@ -53,13 +53,13 @@ fun BackgroundColorGrid(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(backgroundColor)),
+                        .background(backgroundColor),
                     contentAlignment = androidx.compose.ui.Alignment.Center
                 ) {
                     Text(
                         text = text,
                         style = MaterialTheme.valueWatchTypography.title,
-                        color = Color(textColor),
+                        color = textColor,
                     )
                 }
             }

@@ -43,12 +43,12 @@ fun PreferencesScreen(
     navigation.value?.let { nav ->
         when (nav) {
             PreferencesNavigation.GoToWatchScreen -> navGraph.navigateToWatchScreen()
+            PreferencesNavigation.GoBack -> navGraph.popBackStack()
         }
     }
 
     BackHandler {
         viewModel.handleEvent(PreferencesEvent.OnBackClicked)
-        navGraph.popBackStack()
     }
 
     PreferencesScreenContent(

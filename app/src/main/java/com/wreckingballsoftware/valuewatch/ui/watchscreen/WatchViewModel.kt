@@ -39,9 +39,11 @@ class WatchViewModel(
 
         viewModelScope.launch(Dispatchers.Main) {
             timer.time.collect { time ->
-                state = state.copy(time = time)
+                handleEvent(WatchEvent.UpdateTime(time))
             }
         }
+
+        handleEvent(WatchEvent.Initialize)
     }
 
     private fun startTimer(startTimer: Boolean) {
@@ -53,7 +55,15 @@ class WatchViewModel(
     }
 
     private fun resetTimer() {
+        state = state.copy(isTiming = false, time = "00:00:00", money = "0")
         timer.stopTimer()
+    }
+
+    private fun goToPreferences() {
+        resetTimer()
+        viewModelScope.launch(Dispatchers.Main) {
+            navigation.emit(WatchNavigation.GoToPreferences)
+        }
     }
 
     fun handleEvent(event: WatchEvent) {
@@ -63,21 +73,19 @@ class WatchViewModel(
                 startTimer(state.isTiming)
             }
             WatchEvent.OnResetButtonClicked -> {
-                state = state.copy(isTiming = false, time = "00:00:00", money = "0")
                 resetTimer()
             }
             is WatchEvent.UpdateMoney -> {
                 state = state.copy(money = event.money)
             }
-            WatchEvent.OnPreferencesButtonClicked -> {
-                state = state.copy(isTiming = false, time = "00:00:00", money = "0")
-                resetTimer()
-                navigation.tryEmit(WatchNavigation.GoToPreferences)
+            is WatchEvent.UpdateTime -> {
+                state = state.copy(time = event.time)
             }
-            WatchEvent.OnStart -> {
+            WatchEvent.OnPreferencesButtonClicked -> {
+                goToPreferences()
+            }
+            WatchEvent.Initialize -> {
                 state = state.copy(
-                    money = "0",
-                    time = "00:00:00",
                     currencySymbol = currencyRepo.currencySymbol(),
                 )
                 resetTimer()

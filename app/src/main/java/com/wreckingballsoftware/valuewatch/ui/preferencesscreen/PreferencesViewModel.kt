@@ -80,6 +80,7 @@ class PreferencesViewModel(
             PreferencesEvent.OnBackClicked -> {
                 viewModelScope.launch(Dispatchers.Main) {
                     currencyRepo.setCurrentHourlyRate(state.hourlyRate)
+                    navigation.emit(PreferencesNavigation.GoBack)
                 }
             }
             PreferencesEvent.OnDoneClicked -> {
