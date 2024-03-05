@@ -119,15 +119,15 @@ fun PreferencesScreenContentPreview() {
     PreferencesScreenContent(
         state = PreferencesState(
             bgColors = listOf(
-                BackgroundColor("White", 0xFFFFFFFF.toInt(), 0xFF000000.toInt()),
-                BackgroundColor("Black", 0xFF000000.toInt(), 0xFFFFFFFF.toInt()),
-                BackgroundColor("Red", 0xFFFF0000.toInt(), 0xFFFFFFFF.toInt()),
-                BackgroundColor("Green", 0xFF00FF00.toInt(), 0xFFFFFFFF.toInt()),
-                BackgroundColor("Blue", 0xFF0000FF.toInt(), 0xFFFFFFFF.toInt()),
-                BackgroundColor("Yellow", 0xFFFFFF00.toInt(), 0xFF000000.toInt()),
-                BackgroundColor("Magenta", 0xFFFF00FF.toInt(), 0xFFFFFFFF.toInt()),
-                BackgroundColor("Cyan", 0xFF00FFFF.toInt(), 0xFF000000.toInt()),
-                BackgroundColor("Gray", 0xFF888888.toInt(), 0xFF000000.toInt()),
+                BackgroundColor("White", 0xFFFFFFFF, 0xFF000000),
+                BackgroundColor("Black", 0xFF000000, 0xFFFFFFFF),
+                BackgroundColor("Pink", 0xFFFF80ED, 0xFF000000),
+                BackgroundColor("Forest", 0xFF065535, 0xFFFFFFFF),
+                BackgroundColor("Sand", 0xFFFFA500, 0xFF000000),
+                BackgroundColor("Teal", 0xFF40E0D0, 0xFF000000),
+                BackgroundColor("Peach", 0xFFFA8072, 0xFF000000),
+                BackgroundColor("Red", 0xFF800000, 0xFFFFFFFF),
+                BackgroundColor("Violet", 0xFF8A2BE2, 0xFFFFFFFF),
             )
         ),
         fontColor = Color.Black,

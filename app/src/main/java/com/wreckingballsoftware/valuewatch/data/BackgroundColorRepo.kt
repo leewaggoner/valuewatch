@@ -1,6 +1,5 @@
 package com.wreckingballsoftware.valuewatch.data
 
-import androidx.compose.ui.graphics.Color
 import com.wreckingballsoftware.valuewatch.data.models.BackgroundColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,15 +11,15 @@ class BackgroundColorRepo(
         get() = field ?: backgroundColors.first()
 
     val backgroundColors = listOf(
-        BackgroundColor("White", 0xFFFFFFFF.toInt(), 0xFF000000.toInt()),
-        BackgroundColor("Black", 0xFF000000.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Pink", 0xFFFF80ED.toInt(), 0xFF000000.toInt()),
-        BackgroundColor("Forest", 0xFF065535.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Sand", 0xFFFFA500.toInt(), 0xFF000000.toInt()),
-        BackgroundColor("Teal", 0xFF40E0D0.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Peach", 0xFFFA8072.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Red", 0xFF800000.toInt(), 0xFFFFFFFF.toInt()),
-        BackgroundColor("Violet", 0xFF8A2BE2.toInt(), 0xFFFFFFFF.toInt()),
+        BackgroundColor("White", 0xFFFFFFFF, 0xFF000000),
+        BackgroundColor("Black", 0xFF000000, 0xFFFFFFFF),
+        BackgroundColor("Pink", 0xFFFF80ED, 0xFF000000),
+        BackgroundColor("Forest", 0xFF065535, 0xFFFFFFFF),
+        BackgroundColor("Sand", 0xFFFFA500, 0xFF000000),
+        BackgroundColor("Teal", 0xFF40E0D0, 0xFF000000),
+        BackgroundColor("Peach", 0xFFFA8072, 0xFF000000),
+        BackgroundColor("Red", 0xFF800000, 0xFFFFFFFF),
+        BackgroundColor("Violet", 0xFF8A2BE2, 0xFFFFFFFF),
     )
     private val _bgColor = MutableStateFlow(backgroundColors.first())
     val bgColor: StateFlow<BackgroundColor> = _bgColor
@@ -37,10 +36,6 @@ class BackgroundColorRepo(
         dataStoreWrapper.setBackgroundColor(color)
         currentBackgroundColor = backgroundColors.first { it.colorText == color }
         _bgColor.emit(currentBackgroundColor ?: backgroundColors.first())
-    }
-
-    fun getBackgroundColor(): Color {
-        return Color(currentBackgroundColor?.backgroundColor ?: 0xFFFFFFFF.toInt())
     }
 
     fun getCurrentBackgroundColorIndex(): Int {
