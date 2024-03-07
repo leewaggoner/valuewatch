@@ -13,7 +13,7 @@ import com.wreckingballsoftware.valuewatch.data.DataStoreWrapper
 import com.wreckingballsoftware.valuewatch.data.Timer
 import com.wreckingballsoftware.valuewatch.ui.MainActivityViewModel
 import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.PreferencesViewModel
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.WatchViewModel
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.TimerViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,6 +24,13 @@ import org.koin.dsl.module
 private const val DATA_STORE_NAME = "com.wreckingballsoftware.valuewatch"
 
 val appModule = module {
+    viewModel {
+        TimerViewModel(
+            handle = get(),
+            currencyRepo = get(),
+            timer = get(),
+        )
+    }
     viewModel {
         MainActivityViewModel(
             handle = get(),
@@ -36,14 +43,6 @@ val appModule = module {
             handle = get(),
             backgroundColorRepo = get(),
             currencyRepo = get(),
-        )
-    }
-
-    viewModel {
-        WatchViewModel(
-            handle = get(),
-            currencyRepo = get(),
-            timer = get(),
         )
     }
 

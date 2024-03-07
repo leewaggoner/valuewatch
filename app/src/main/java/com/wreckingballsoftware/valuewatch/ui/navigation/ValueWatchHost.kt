@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wreckingballsoftware.valuewatch.data.models.BackgroundColor
 import com.wreckingballsoftware.valuewatch.ui.preferencesscreen.PreferencesScreen
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.WatchScreen
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.TimerScreen
 
 @Composable
 fun ValueWatchHost(
@@ -45,7 +45,7 @@ fun ValueWatchHost(
                     .fillMaxSize(),
                 color = backgroundColor.getBackgroundColor()
             ) {
-                WatchScreen(
+                TimerScreen(
                     navGraph = navGraph,
                     fontColor = backgroundColor.getTextColor()
                 )

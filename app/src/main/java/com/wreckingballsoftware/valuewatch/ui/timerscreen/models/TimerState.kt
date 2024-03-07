@@ -1,10 +1,10 @@
-package com.wreckingballsoftware.valuewatch.ui.watchscreen.models
+package com.wreckingballsoftware.valuewatch.ui.timerscreen.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class WatchState(
+data class TimerState(
     val time: String = "00:00:00",
     val currencySymbol: String = "",
     val money: String = "0.00",

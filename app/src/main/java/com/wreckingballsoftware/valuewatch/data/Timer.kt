@@ -23,7 +23,7 @@ class Timer(
     val time: StateFlow<String> = mutableTime
 
     fun startTimer(coroutineScope: CoroutineScope) {
-        clearValue()
+        clearValues()
         if (job == null) {
             startJob(coroutineScope)
         }
@@ -45,6 +45,7 @@ class Timer(
     }
 
     fun stopTimer() {
+        clearValues()
         stopJob()
         seconds = 0
     }
@@ -54,11 +55,12 @@ class Timer(
         job = null
     }
 
-    private fun clearValue() {
+    private fun clearValues() {
         mutableTicker.value = "0"
+        mutableTime.value = "00:00:00"
     }
 
-    private suspend fun secondsToMoney(seconds: Long): String {
+    private fun secondsToMoney(seconds: Long): String {
         if (seconds <= 0) {
             return "0"
         }
@@ -70,14 +72,14 @@ class Timer(
 
         val decimalDigits = currencyRepo.currencyDecimalDigits()
         if (decimalDigits > 0 && rate.length >= decimalDigits) {
-            rate =StringBuilder(rate).insert(rate.length - currencyRepo.currencyDecimalDigits(), ".")
+            rate = StringBuilder(rate).insert(rate.length - decimalDigits, ".")
                 .toString()
         }
 
         val hourlyRate = BigDecimal(rate)
 
         return (hourlyRate * BigDecimal(seconds) / BigDecimal(3600))
-            .setScale(currencyRepo.currencyDecimalDigits(), RoundingMode.DOWN)
+            .setScale(decimalDigits, RoundingMode.DOWN)
             .toString()
     }
 

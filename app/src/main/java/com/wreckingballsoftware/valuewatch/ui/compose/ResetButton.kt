@@ -16,13 +16,13 @@ import androidx.compose.ui.unit.dp
 import com.wreckingballsoftware.valuewatch.R
 import com.wreckingballsoftware.valuewatch.ui.theme.dimensions
 import com.wreckingballsoftware.valuewatch.ui.theme.valueWatchTypography
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchEvent
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.models.TimerEvent
 
 @Composable
 fun ResetButton(
     modifier: Modifier = Modifier,
     fontColor: Color,
-    handleEvent: (WatchEvent) -> Unit,
+    handleEvent: (TimerEvent) -> Unit,
 ) {
     Button(
         modifier = modifier.then(
@@ -34,7 +34,7 @@ fun ResetButton(
                     shape = RectangleShape
                 )
         ),
-        onClick = { handleEvent(WatchEvent.OnResetButtonClicked) },
+        onClick = { handleEvent(TimerEvent.OnResetButtonClicked) },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent
         )

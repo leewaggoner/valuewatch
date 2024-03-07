@@ -14,15 +14,15 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wreckingballsoftware.valuewatch.R
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchEvent
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchState
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.models.TimerEvent
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.models.TimerState
 
 @Composable
 fun StartPauseButton(
     modifier: Modifier = Modifier,
-    state: WatchState,
+    state: TimerState,
     fontColor: Color,
-    handleEvent: (WatchEvent) -> Unit
+    handleEvent: (TimerEvent) -> Unit
 ) {
     IconButton(
         modifier = modifier.then(
@@ -35,7 +35,7 @@ fun StartPauseButton(
                 )
         ),
         onClick = {
-            handleEvent(WatchEvent.OnPlayButtonClicked)
+            handleEvent(TimerEvent.OnPlayButtonClicked)
         }
     ) {
         Icon(
@@ -56,7 +56,7 @@ fun StartPauseButton(
 @Composable
 fun StartPauseButtonPreview() {
     StartPauseButton(
-        state = WatchState(),
+        state = TimerState(),
         fontColor = Color.Black,
         handleEvent = {}
     )

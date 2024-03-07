@@ -1,4 +1,4 @@
-package com.wreckingballsoftware.valuewatch.ui.watchscreen
+package com.wreckingballsoftware.valuewatch.ui.timerscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,27 +19,32 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wreckingballsoftware.valuewatch.ui.compose.ResetButton
 import com.wreckingballsoftware.valuewatch.ui.compose.StartPauseButton
 import com.wreckingballsoftware.valuewatch.ui.navigation.NavGraph
+import com.wreckingballsoftware.valuewatch.ui.theme.Black
 import com.wreckingballsoftware.valuewatch.ui.theme.dimensions
 import com.wreckingballsoftware.valuewatch.ui.theme.valueWatchTypography
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchEvent
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchNavigation
-import com.wreckingballsoftware.valuewatch.ui.watchscreen.models.WatchState
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.models.TimerEvent
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.models.TimerNavigation
+import com.wreckingballsoftware.valuewatch.ui.timerscreen.models.TimerState
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun WatchScreen(
+fun TimerScreen(
     navGraph: NavGraph,
     fontColor: Color,
-    viewModel: WatchViewModel = getViewModel(),
+    viewModel: TimerViewModel = getViewModel(),
 ) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.handleEvent(TimerEvent.Initialize)
+    }
+
     val navigation = viewModel.navigation.collectAsStateWithLifecycle(null)
     navigation.value?.let { nav ->
         when (nav) {
-            WatchNavigation.GoToPreferences -> navGraph.navigateToPreferencesScreen()
+            TimerNavigation.GoToPreferences -> navGraph.navigateToPreferencesScreen()
         }
     }
 
-    WatchScreenContent(
+    TimerScreenContent(
         state = viewModel.state,
         fontColor = fontColor,
         handleEvent = viewModel::handleEvent,
@@ -46,10 +52,10 @@ fun WatchScreen(
 }
 
 @Composable
-private fun WatchScreenContent(
-    state: WatchState,
+fun TimerScreenContent(
+    state: TimerState,
     fontColor: Color,
-    handleEvent: (WatchEvent) -> Unit,
+    handleEvent: (TimerEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -82,7 +88,7 @@ private fun WatchScreenContent(
         Button(
             modifier = Modifier.width(MaterialTheme.dimensions.buttonWidth),
             onClick = {
-                handleEvent(WatchEvent.OnPreferencesButtonClicked)
+                handleEvent(TimerEvent.OnPreferencesButtonClicked)
             }
         ) {
             Text(
@@ -93,12 +99,12 @@ private fun WatchScreenContent(
     }
 }
 
-@Preview(name = "WatchScreenContent Preview", showBackground = true)
+@Preview(name = "TimerScreenContent Preview", showBackground = true)
 @Composable
-fun WatchScreenContentPreview() {
-    WatchScreenContent(
-        state = WatchState(),
-        fontColor = Color.Black,
-        handleEvent = { },
+fun TimerScreenContentPreview() {
+    TimerScreenContent(
+        state = TimerState(),
+        fontColor = Black,
+        handleEvent = { }
     )
 }
